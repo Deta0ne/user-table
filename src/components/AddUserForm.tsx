@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useContext } from "react";
 import {
   Box,
   Stack,
@@ -15,41 +14,20 @@ import {
 } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material/Select";
 import "../css/AddUserForm.css";
-import { User } from "../types/User";
+import UserContext from "../context/TableContext";
 
 const AddUserForm = () => {
-  //User State
-  const [fullName, setFullName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  // Rol State
-  const [role, setRole] = React.useState<string>("");
-
-  // Avatar State
-  const [selectedAvatar, setSelectedAvatar] = React.useState("");
-  const handleAvatarChange = (
-    event: React.MouseEvent<HTMLElement>,
-    newAvatar: string
-  ) => {
-    setSelectedAvatar(newAvatar);
-  };
-  //Add User Submit
-  const handleAddSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newUser: User = {
-      fullName: fullName,
-      username: username,
-      email: email,
-      role: role,
-      avatar: selectedAvatar,
-      id: Math.floor(Math.random() * 1000),
-    };
-    try {
-      const { data } = await axios.post("http://localhost:3000/users", newUser);
-    } catch (error) {
-      console.log("Kullanıcı Oluşturulamadı");
-    }
-  };
+  const {
+    isSubmitting,
+    handleAddSubmit,
+    setFullName,
+    setUsername,
+    setEmail,
+    role,
+    setRole,
+    selectedAvatar,
+    handleAvatarChange,
+  } = useContext(UserContext);
 
   return (
     <div>
@@ -124,7 +102,12 @@ const AddUserForm = () => {
             ))}
           </ToggleButtonGroup>
         </Stack>
-        <Button type="submit" variant="contained" className="form-button">
+        <Button
+          type="submit"
+          variant="contained"
+          className="form-button"
+          disabled={isSubmitting}
+        >
           Create User
         </Button>
       </Box>

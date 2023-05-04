@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   Avatar,
   Stack,
@@ -18,14 +18,11 @@ import {
   Pagination,
 } from "@mui/material";
 import Vector from "../assets/Button.png";
-import axios from "axios";
 import { User } from "../types/User";
 import UserContext from "../context/TableContext";
 //Dialog İmport
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 //Tab İmport
 import TabContext from "@mui/lab/TabContext";
@@ -48,6 +45,7 @@ const DataTable = () => {
     handleAddClickOpen,
     openAddDialog,
   } = useContext(UserContext);
+
   useEffect(() => {
     fetchUsers();
   }, []);

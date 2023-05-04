@@ -10,9 +10,20 @@ interface UserContextType {
   openAddDialog: boolean;
   handleAddClickOpen: () => void;
   handleAddClose: () => void;
+  handleAddSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleAvatarChange: (
+    e: React.MouseEvent<HTMLElement>,
+    newAvatar: string
+  ) => void;
   fetchUsers: () => Promise<void>;
+  setFullName: (fullName: string) => void;
+  setUsername: (username: string) => void;
+  setEmail: (email: string) => void;
+  role: string;
+  setRole: (role: string) => void;
+  selectedAvatar: string;
+  isSubmitting: boolean;
 }
-
 const UserContext = createContext<UserContextType>({} as UserContextType);
 
 function Provider({ children }: any) {
@@ -32,7 +43,46 @@ function Provider({ children }: any) {
     const { data } = await axios.get("http://localhost:3000/users");
     setUsers(data);
   };
+  //AddUserForm
+  //User State
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  // Rol State
+  const [role, setRole] = React.useState<string>("");
 
+  // Avatar State
+  const [selectedAvatar, setSelectedAvatar] = React.useState("");
+  const handleAvatarChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newAvatar: string
+  ) => {
+    setSelectedAvatar(newAvatar);
+  };
+  //Add User Submit
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const handleAddSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    const newUser: User = {
+      fullName: fullName,
+      username: username,
+      email: email,
+      role: role,
+      avatar: selectedAvatar,
+    };
+    try {
+      const { data } = await axios.post("http://localhost:3000/users", newUser);
+      setUsers((prevUsers) => [...prevUsers, data]);
+      handleAddClose();
+    } catch (error) {
+      console.log("Kullanıcı Oluşturulamadı");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  //Paylaşılanlar
   const sharedValuesAndMethods: UserContextType = {
     users,
     setUsers,
@@ -42,6 +92,15 @@ function Provider({ children }: any) {
     handleAddClickOpen,
     handleAddClose,
     fetchUsers,
+    handleAddSubmit,
+    setFullName,
+    setUsername,
+    setEmail,
+    role,
+    setRole,
+    selectedAvatar,
+    handleAvatarChange,
+    isSubmitting,
   };
   return (
     <UserContext.Provider value={sharedValuesAndMethods}>
