@@ -57,7 +57,20 @@ const DataTable = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
-  const userRows = users.map((user: User) => (
+  // Search User
+  const [searched, setSearched] = useState<string>("");
+  const requestSearch = (searchedVal: string) => {
+    setSearched(searchedVal);
+  };
+  const filteredUsers = users.filter((user: User) => {
+    return (
+      user.email.toLowerCase().includes(searched.toLowerCase()) ||
+      user.username.toLowerCase().includes(searched.toLowerCase())
+    );
+  });
+
+  //Add users to table
+  const userRows = filteredUsers.map((user: User) => (
     <TableRow key={user.id}>
       <TableCell>
         <CheckBox />
@@ -74,6 +87,7 @@ const DataTable = () => {
       </TableCell>
     </TableRow>
   ));
+
   return (
     <>
       <Paper>
@@ -109,6 +123,8 @@ const DataTable = () => {
         <Divider />
         <Stack direction={"row"}>
           <TextField
+            value={searched}
+            onChange={(e) => requestSearch(e.target.value)}
             variant="standard"
             size="small"
             placeholder="Search"
@@ -121,7 +137,11 @@ const DataTable = () => {
               disableUnderline: true,
             }}
           />
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              setSearched("");
+            }}
+          >
             <DeleteIcon />
           </IconButton>
           <Button variant="text">Delete</Button>
