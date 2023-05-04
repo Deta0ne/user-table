@@ -18,17 +18,35 @@ import {
   Pagination,
 } from "@mui/material";
 import Vector from "../assets/Button.png";
+//Dialog İmport
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+//Tab İmport
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import Tab from "@mui/material/Tab";
+//Icons İmport
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CheckBox } from "@mui/icons-material";
+import AddUserForm from "./AddUserForm";
 
 const DataTable = () => {
   //Tab and role filter
   const [tabValue, setTabValue] = useState("all");
+  //Add User Form Dialog
+  const [openAddDialog, setopenAddDialog] = useState(false);
+  const handleAddClickOpen = () => {
+    setopenAddDialog(true);
+  };
+  const handleAddClose = () => {
+    setopenAddDialog(false);
+  };
+
   return (
     <>
       <Paper>
@@ -52,7 +70,12 @@ const DataTable = () => {
               <Tab label="Subscriber" value="subscriber" />
             </TabList>
           </TabContext>
-          <Button variant="contained" size="small" startIcon={<AddIcon />}>
+          <Button
+            variant="contained"
+            size="small"
+            startIcon={<AddIcon />}
+            onClick={handleAddClickOpen}
+          >
             Add New User
           </Button>
         </Stack>
@@ -107,6 +130,12 @@ const DataTable = () => {
         <Stack>
           <Pagination />
         </Stack>
+        <Dialog open={openAddDialog} onClose={handleAddClose}>
+          <DialogTitle>Add New User</DialogTitle>
+          <DialogContent>
+            <AddUserForm />
+          </DialogContent>
+        </Dialog>
       </Paper>
     </>
   );
