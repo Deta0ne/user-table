@@ -32,11 +32,30 @@ interface UserContextType {
   selectAll: boolean;
   setSelectAll: (selectAll: boolean) => void;
   handleSelectAll: () => void;
+  page: number;
+  setPage: (page: number) => void;
+  rowsPerPage: number;
+  setRowsPerPage: (rowsPerPage: number) => void;
+  handleChangePage: (
+    event: React.ChangeEvent<unknown>,
+    newPage: number
+  ) => void;
 }
 const UserContext = createContext<UserContextType>({} as UserContextType);
 
 function Provider({ children }: any) {
   //DataTable
+  // Pagintaiton
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
+
+  const handleChangePage = (
+    event: React.ChangeEvent<unknown>,
+    newPage: number
+  ) => {
+    setPage(newPage - 1);
+  };
+
   //Checkbox
   const [checkedUsers, setCheckedUsers] = useState(new Set<number>());
   const [selectAll, setSelectAll] = useState(false);
@@ -149,6 +168,11 @@ function Provider({ children }: any) {
     selectAll,
     setSelectAll,
     handleSelectAll,
+    page,
+    setPage,
+    rowsPerPage,
+    setRowsPerPage,
+    handleChangePage,
   };
   return (
     <UserContext.Provider value={sharedValuesAndMethods}>

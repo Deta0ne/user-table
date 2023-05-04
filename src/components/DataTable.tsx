@@ -54,6 +54,11 @@ const DataTable = () => {
     selectAll,
     setSelectAll,
     handleSelectAll,
+    page,
+    setPage,
+    rowsPerPage,
+    setRowsPerPage,
+    handleChangePage,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -61,38 +66,40 @@ const DataTable = () => {
   }, []);
 
   //Add users to table
-  const userRows = filteredUsers.map((user: User) => (
-    <TableRow key={user.id}>
-      <TableCell>
+  const userRows = filteredUsers
+    .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
+    .map((user: User) => (
+      <TableRow key={user.id}>
         <TableCell>
-          <Checkbox
-            checked={user.id ? checkedUsers.has(user.id) : false}
-            onChange={() => {
-              if (user.id) {
-                const newCheckedUsers = new Set(checkedUsers);
-                if (checkedUsers.has(user.id)) {
-                  newCheckedUsers.delete(user.id);
-                } else {
-                  newCheckedUsers.add(user.id);
+          <TableCell>
+            <Checkbox
+              checked={user.id ? checkedUsers.has(user.id) : false}
+              onChange={() => {
+                if (user.id) {
+                  const newCheckedUsers = new Set(checkedUsers);
+                  if (checkedUsers.has(user.id)) {
+                    newCheckedUsers.delete(user.id);
+                  } else {
+                    newCheckedUsers.add(user.id);
+                  }
+                  setCheckedUsers(newCheckedUsers);
                 }
-                setCheckedUsers(newCheckedUsers);
-              }
-            }}
-          />
+              }}
+            />
+          </TableCell>
         </TableCell>
-      </TableCell>
-      <TableCell>
-        <Avatar src={user.avatar ? `/src/assets/${user.avatar}.png` : ""} />
-      </TableCell>
-      <TableCell>{user.fullName}</TableCell>
-      <TableCell>{user.username}</TableCell>
-      <TableCell>{user.email}</TableCell>
-      <TableCell>{user.role}</TableCell>
-      <TableCell>
-        {/* Düzenleme işlemini burada gerçekleştirebilirsiniz */}
-      </TableCell>
-    </TableRow>
-  ));
+        <TableCell>
+          <Avatar src={user.avatar ? `/src/assets/${user.avatar}.png` : ""} />
+        </TableCell>
+        <TableCell>{user.fullName}</TableCell>
+        <TableCell>{user.username}</TableCell>
+        <TableCell>{user.email}</TableCell>
+        <TableCell>{user.role}</TableCell>
+        <TableCell>
+          {/* Düzenleme işlemini burada gerçekleştirebilirsiniz */}
+        </TableCell>
+      </TableRow>
+    ));
 
   return (
     <>
@@ -171,7 +178,15 @@ const DataTable = () => {
           </Table>
         </TableContainer>
         <Stack>
-          <Pagination />
+          <Pagination
+            defaultPage={1}
+            count={Math.ceil(filteredUsers.length / rowsPerPage)}
+            shape="rounded"
+            size="small"
+            color="primary"
+            page={page + 1}
+            onChange={handleChangePage}
+          />
         </Stack>
         <Dialog open={openAddDialog} onClose={handleAddClose}>
           <DialogTitle>Add New User</DialogTitle>
