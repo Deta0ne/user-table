@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Avatar,
   Stack,
@@ -20,6 +20,7 @@ import {
 import Vector from "../assets/Button.png";
 import axios from "axios";
 import { User } from "../types/User";
+import UserContext from "../context/TableContext";
 //Dialog İmport
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -38,22 +39,15 @@ import { CheckBox } from "@mui/icons-material";
 import AddUserForm from "./AddUserForm";
 
 const DataTable = () => {
-  //Tab and role filter
-  const [tabValue, setTabValue] = useState("all");
-  //Add User Form Dialog
-  const [openAddDialog, setopenAddDialog] = useState(false);
-  const handleAddClickOpen = () => {
-    setopenAddDialog(true);
-  };
-  const handleAddClose = () => {
-    setopenAddDialog(false);
-  };
-  //Fetch Users
-  const [users, setUsers] = useState([]);
-  const fetchUsers = async () => {
-    const { data } = await axios.get("http://localhost:3000/users");
-    setUsers(data);
-  };
+  const {
+    fetchUsers,
+    users,
+    setTabValue,
+    tabValue,
+    handleAddClose,
+    handleAddClickOpen,
+    openAddDialog,
+  } = useContext(UserContext);
   useEffect(() => {
     fetchUsers();
   }, []);
