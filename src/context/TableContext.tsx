@@ -23,10 +23,37 @@ interface UserContextType {
   setRole: (role: string) => void;
   selectedAvatar: string;
   isSubmitting: boolean;
+  requestSearch: (searchedVal: string) => void;
+  filteredUsers: User[];
+  searched: string;
+  setSearched: (searched: string) => void;
+  checkedUsers: Set<number>;
+  setCheckedUsers: (checkedUsers: Set<number>) => void;
+  selectAll: boolean;
+  setSelectAll: (selectAll: boolean) => void;
+  handleSelectAll: () => void;
 }
 const UserContext = createContext<UserContextType>({} as UserContextType);
 
 function Provider({ children }: any) {
+  //DataTable
+  //Checkbox
+  const [checkedUsers, setCheckedUsers] = useState(new Set<number>());
+  const [selectAll, setSelectAll] = useState(false);
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setCheckedUsers(new Set());
+    } else {
+      const newCheckedUsers = new Set<number>();
+      filteredUsers.forEach((user) => {
+        if (user.id) {
+          newCheckedUsers.add(user.id);
+        }
+      });
+      setCheckedUsers(newCheckedUsers);
+    }
+    setSelectAll(!selectAll);
+  };
   //Tab and role filter
   const [tabValue, setTabValue] = useState("all");
   //Add User Form Dialog
@@ -43,6 +70,18 @@ function Provider({ children }: any) {
     const { data } = await axios.get("http://localhost:3000/users");
     setUsers(data);
   };
+  // Search User
+  const [searched, setSearched] = useState<string>("");
+  const requestSearch = (searchedVal: string) => {
+    setSearched(searchedVal);
+  };
+  const filteredUsers = users.filter((user: User) => {
+    return (
+      user.email.toLowerCase().includes(searched.toLowerCase()) ||
+      user.username.toLowerCase().includes(searched.toLowerCase())
+    );
+  });
+
   //AddUserForm
   //User State
   const [fullName, setFullName] = useState("");
@@ -101,6 +140,15 @@ function Provider({ children }: any) {
     selectedAvatar,
     handleAvatarChange,
     isSubmitting,
+    requestSearch,
+    filteredUsers,
+    searched,
+    setSearched,
+    checkedUsers,
+    setCheckedUsers,
+    selectAll,
+    setSelectAll,
+    handleSelectAll,
   };
   return (
     <UserContext.Provider value={sharedValuesAndMethods}>

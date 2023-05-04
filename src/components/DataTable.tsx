@@ -16,6 +16,7 @@ import {
   TableHead,
   TableRow,
   Pagination,
+  Checkbox,
 } from "@mui/material";
 import Vector from "../assets/Button.png";
 import { User } from "../types/User";
@@ -44,28 +45,41 @@ const DataTable = () => {
     handleAddClose,
     handleAddClickOpen,
     openAddDialog,
+    requestSearch,
+    filteredUsers,
+    searched,
+    setSearched,
+    checkedUsers,
+    setCheckedUsers,
+    selectAll,
+    setSelectAll,
+    handleSelectAll,
   } = useContext(UserContext);
 
   useEffect(() => {
     fetchUsers();
   }, []);
-  // Search User
-  const [searched, setSearched] = useState<string>("");
-  const requestSearch = (searchedVal: string) => {
-    setSearched(searchedVal);
-  };
-  const filteredUsers = users.filter((user: User) => {
-    return (
-      user.email.toLowerCase().includes(searched.toLowerCase()) ||
-      user.username.toLowerCase().includes(searched.toLowerCase())
-    );
-  });
 
   //Add users to table
   const userRows = filteredUsers.map((user: User) => (
     <TableRow key={user.id}>
       <TableCell>
-        <CheckBox />
+        <TableCell>
+          <Checkbox
+            checked={user.id ? checkedUsers.has(user.id) : false}
+            onChange={() => {
+              if (user.id) {
+                const newCheckedUsers = new Set(checkedUsers);
+                if (checkedUsers.has(user.id)) {
+                  newCheckedUsers.delete(user.id);
+                } else {
+                  newCheckedUsers.add(user.id);
+                }
+                setCheckedUsers(newCheckedUsers);
+              }
+            }}
+          />
+        </TableCell>
       </TableCell>
       <TableCell>
         <Avatar src={user.avatar ? `/src/assets/${user.avatar}.png` : ""} />
@@ -143,7 +157,7 @@ const DataTable = () => {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <CheckBox />
+                  <Checkbox checked={selectAll} onChange={handleSelectAll} />
                 </TableCell>
                 <TableCell>Avatar</TableCell>
                 <TableCell>Name</TableCell>
