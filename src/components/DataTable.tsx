@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Box,
+  Avatar,
   Stack,
   Paper,
   Button,
@@ -18,6 +18,8 @@ import {
   Pagination,
 } from "@mui/material";
 import Vector from "../assets/Button.png";
+import axios from "axios";
+import { User } from "../types/User";
 //Dialog İmport
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -46,7 +48,32 @@ const DataTable = () => {
   const handleAddClose = () => {
     setopenAddDialog(false);
   };
-
+  //Fetch Users
+  const [users, setUsers] = useState([]);
+  const fetchUsers = async () => {
+    const { data } = await axios.get("http://localhost:3000/users");
+    setUsers(data);
+  };
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+  const userRows = users.map((user: User) => (
+    <TableRow key={user.id}>
+      <TableCell>
+        <CheckBox />
+      </TableCell>
+      <TableCell>
+        <Avatar src={user.avatar ? `/src/assets/${user.avatar}.png` : ""} />
+      </TableCell>
+      <TableCell>{user.fullName}</TableCell>
+      <TableCell>{user.username}</TableCell>
+      <TableCell>{user.email}</TableCell>
+      <TableCell>{user.role}</TableCell>
+      <TableCell>
+        {/* Düzenleme işlemini burada gerçekleştirebilirsiniz */}
+      </TableCell>
+    </TableRow>
+  ));
   return (
     <>
       <Paper>
@@ -114,17 +141,7 @@ const DataTable = () => {
                 <TableCell>Edit</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableBody>
+            <TableBody>{userRows}</TableBody>
           </Table>
         </TableContainer>
         <Stack>

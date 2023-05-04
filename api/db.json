@@ -7,6 +7,14 @@
       "role": "Administrator",
       "avatar": "Avatar3",
       "id": 1
+    },
+    {
+      "fullName": "Finarfin Noldor",
+      "username": "Finar",
+      "email": "finar.01@gmail.com",
+      "role": "Contributor",
+      "avatar": "Avatar2",
+      "id": 2
     }
   ]
 }

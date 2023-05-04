@@ -42,10 +42,10 @@ const AddUserForm = () => {
       email: email,
       role: role,
       avatar: selectedAvatar,
+      id: Math.floor(Math.random() * 1000),
     };
     try {
       const { data } = await axios.post("http://localhost:3000/users", newUser);
-      console.log(data);
     } catch (error) {
       console.log("Kullanıcı Oluşturulamadı");
     }
