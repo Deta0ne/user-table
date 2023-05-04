@@ -1,46 +1,43 @@
-import React from "react";
-import {
-  Box,
-  Stack,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
-import { SelectChangeEvent } from "@mui/material/Select";
+import React, { useState } from "react";
+import { Box, Stack, Paper, Button, Typography } from "@mui/material";
+import Vector from "../assets/Button.png";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import Tab from "@mui/material/Tab";
+import AddIcon from "@mui/icons-material/Add";
 
 const DataTable = () => {
-  // Rol State
-  const [role, setRole] = React.useState<string>("");
-  const handleRoleChange = (event: SelectChangeEvent) => {
-    setRole(event.target.value as string);
-  };
-
+  //Tab and role filter
+  const [tabValue, setTabValue] = useState("all");
   return (
-    <div>
-      <Box>
-        <Stack>
-          <TextField />
-          <TextField />
-          <TextField />
-          <FormControl>
-            <InputLabel>Rol</InputLabel>
-            <Select
-              label="Age"
-              size="small"
-              value={role}
-              onChange={handleRoleChange}
-            >
-              <MenuItem value={"Contributor"}>Contributor</MenuItem>
-              <MenuItem value={"Subscriber"}>Subscriber</MenuItem>
-              <MenuItem value={"Author"}>Author</MenuItem>
-              <MenuItem value={"Administrator"}>Administrator</MenuItem>
-            </Select>
-          </FormControl>
+    <>
+      <Paper>
+        <Stack direction={"row"}>
+          <Button
+            variant="text"
+            sx={{
+              background: `url(${Vector})`,
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+            }}
+          />
+          <Typography>Users</Typography>
+          <TabContext value={tabValue}>
+            <TabList>
+              <Tab label="All" value="all" />
+              <Tab label="Contributor" value="contributor" />
+              <Tab label="Author" value="author" />
+              <Tab label="Administrator" value="administrator" />
+              <Tab label="Subscriber" value="subscriber" />
+            </TabList>
+          </TabContext>
+          <Button variant="contained" size="small">
+            Add New User
+          </Button>
         </Stack>
-      </Box>
-    </div>
+      </Paper>
+    </>
   );
 };
 
