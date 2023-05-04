@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import {
   Box,
   Stack,
@@ -14,13 +15,15 @@ import {
 } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material/Select";
 import "../css/AddUserForm.css";
+import { User } from "../types/User";
 
 const AddUserForm = () => {
+  //User State
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   // Rol State
   const [role, setRole] = React.useState<string>("");
-  const handleRoleChange = (event: SelectChangeEvent) => {
-    setRole(event.target.value as string);
-  };
 
   // Avatar State
   const [selectedAvatar, setSelectedAvatar] = React.useState("");
@@ -30,21 +33,61 @@ const AddUserForm = () => {
   ) => {
     setSelectedAvatar(newAvatar);
   };
+  //Add User Submit
+  const handleAddSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const newUser: User = {
+      fullName: fullName,
+      username: username,
+      email: email,
+      role: role,
+      avatar: selectedAvatar,
+    };
+    try {
+      const { data } = await axios.post("http://localhost:3000/users", newUser);
+      console.log(data);
+    } catch (error) {
+      console.log("Kullanıcı Oluşturulamadı");
+    }
+  };
 
   return (
     <div>
-      <Box>
+      <Box component={"form"} onSubmit={handleAddSubmit}>
         <Stack spacing={3}>
-          <TextField label="Full Name" variant="outlined" size="small" />
-          <TextField label="Username" variant="outlined" size="small" />
-          <TextField label="Email Address" variant="outlined" size="small" />
+          <TextField
+            label="Full Name"
+            variant="outlined"
+            size="small"
+            onChange={(e) => {
+              setFullName(e.target.value);
+            }}
+          />
+          <TextField
+            label="Username"
+            variant="outlined"
+            size="small"
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+          />
+          <TextField
+            label="Email Address"
+            variant="outlined"
+            size="small"
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
           <FormControl>
             <InputLabel>Rol</InputLabel>
             <Select
               label="Age"
               size="small"
               value={role}
-              onChange={handleRoleChange}
+              onChange={(e: SelectChangeEvent) => {
+                setRole(e.target.value as string);
+              }}
             >
               <MenuItem value={"Contributor"}>Contributor</MenuItem>
               <MenuItem value={"Subscriber"}>Subscriber</MenuItem>
