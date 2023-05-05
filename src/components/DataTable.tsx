@@ -61,6 +61,8 @@ const DataTable = () => {
     handleChangePage,
     deleteUser,
     deleteSelectedUsers,
+    filterByRole,
+    handleTabChange,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -69,6 +71,7 @@ const DataTable = () => {
 
   //Add users to table
   const userRows = filteredUsers
+    .filter(filterByRole)
     .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
     .map((user: User) => (
       <TableRow key={user.id}>
@@ -121,7 +124,7 @@ const DataTable = () => {
           />
           <Typography>Users</Typography>
           <TabContext value={tabValue}>
-            <TabList>
+            <TabList onChange={handleTabChange}>
               <Tab label="All" value="all" />
               <Tab label="Contributor" value="contributor" />
               <Tab label="Author" value="author" />

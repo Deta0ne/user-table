@@ -42,6 +42,8 @@ interface UserContextType {
   ) => void;
   deleteUser: (id: number) => Promise<void>;
   deleteSelectedUsers: () => Promise<void>;
+  filterByRole: (user: User) => boolean;
+  handleTabChange: (event: React.SyntheticEvent, newValue: string) => void;
 }
 const UserContext = createContext<UserContextType>({} as UserContextType);
 
@@ -96,6 +98,15 @@ function Provider({ children }: any) {
   };
   //Tab and role filter
   const [tabValue, setTabValue] = useState("all");
+  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+    setPage(0);
+    setTabValue(newValue);
+  };
+  const filterByRole = (user: User) => {
+    return (
+      tabValue === "all" || user.role.toLowerCase() === tabValue.toLowerCase()
+    );
+  };
   //Add User Form Dialog
   const [openAddDialog, setopenAddDialog] = useState(false);
   const handleAddClickOpen = () => {
@@ -196,6 +207,8 @@ function Provider({ children }: any) {
     handleChangePage,
     deleteUser,
     deleteSelectedUsers,
+    filterByRole,
+    handleTabChange,
   };
   return (
     <UserContext.Provider value={sharedValuesAndMethods}>
