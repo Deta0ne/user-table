@@ -73,7 +73,7 @@ const DataTable = () => {
     .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
     .map((user: User) => (
       <TableRow key={user.id}>
-        <TableCell>
+        <TableCell padding="checkbox" sx={{ paddingLeft: "0" }}>
           <Checkbox
             checked={user.id ? checkedUsers.has(user.id) : false}
             onChange={() => {
@@ -90,13 +90,22 @@ const DataTable = () => {
           />
         </TableCell>
         <TableCell>
-          <Avatar src={user.avatar ? `/src/assets/${user.avatar}.png` : ""} />
+          <Avatar
+            variant="rounded"
+            src={user.avatar ? `/src/assets/${user.avatar}.png` : ""}
+          />
         </TableCell>
         <TableCell>{user.fullName}</TableCell>
         <TableCell>{user.username}</TableCell>
         <TableCell>{user.email}</TableCell>
         <TableCell>{user.role}</TableCell>
-        <TableCell>
+        <TableCell
+          sx={{
+            paddingLeft: "10 !important",
+            paddingRight: "0",
+            width: "100px",
+          }}
+        >
           <IconButton onClick={() => user.id && deleteUser(user.id)}>
             <DeleteIcon />
           </IconButton>
@@ -109,7 +118,7 @@ const DataTable = () => {
 
   return (
     <>
-      <Paper>
+      <Paper sx={{ width: "1076px", height: "1000px" }}>
         <Stack direction={"row"}>
           <Button
             variant="text"
@@ -118,19 +127,54 @@ const DataTable = () => {
               backgroundSize: "contain",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
+              marginTop: "6px",
+              width: "35px",
+              height: "35px",
             }}
           />
-          <Typography>Users</Typography>
+          <Typography sx={{ marginTop: "11px" }}>Users</Typography>
           <TabContext value={tabValue}>
-            <TabList onChange={handleTabChange}>
-              <Tab label="All" value="all" />
-              <Tab label="Contributor" value="contributor" />
-              <Tab label="Author" value="author" />
-              <Tab label="Administrator" value="administrator" />
-              <Tab label="Subscriber" value="subscriber" />
+            <TabList
+              sx={{
+                marginLeft: "180px",
+                marginRight: "100px",
+              }}
+              onChange={handleTabChange}
+            >
+              <Tab
+                sx={{ textTransform: "none" }}
+                label="All Users"
+                value="all"
+              />
+              <Tab
+                sx={{ textTransform: "none" }}
+                label="Contributor"
+                value="contributor"
+              />
+              <Tab
+                sx={{ textTransform: "none" }}
+                label="Author"
+                value="author"
+              />
+              <Tab
+                sx={{ textTransform: "none" }}
+                label="Administrator"
+                value="administrator"
+              />
+              <Tab
+                sx={{ textTransform: "none" }}
+                label="Subscriber"
+                value="subscriber"
+              />
             </TabList>
           </TabContext>
           <Button
+            sx={{
+              my: "10px",
+              height: "30px",
+              width: "145px",
+              textTransform: "none",
+            }}
             variant="contained"
             size="small"
             startIcon={<AddIcon />}
@@ -140,8 +184,9 @@ const DataTable = () => {
           </Button>
         </Stack>
         <Divider />
-        <Stack direction={"row"}>
+        <Stack sx={{ py: "20px", paddingLeft: "23px" }} direction={"row"}>
           <TextField
+            sx={{ marginRight: "700px", paddingTop: "6px" }}
             value={searched}
             onChange={(e) => requestSearch(e.target.value)}
             variant="standard"
@@ -163,15 +208,15 @@ const DataTable = () => {
           >
             <DeleteIcon />
           </IconButton>
-          <Button variant="text" onClick={deleteSelectedUsers}>
+          <Button variant="text" color="inherit" onClick={deleteSelectedUsers}>
             Delete
           </Button>
         </Stack>
         <TableContainer>
           <Table>
-            <TableHead>
+            <TableHead sx={{ background: "#F5F5F7" }}>
               <TableRow>
-                <TableCell>
+                <TableCell sx={{ paddingLeft: "0" }}>
                   <Checkbox checked={selectAll} onChange={handleSelectAll} />
                 </TableCell>
                 <TableCell>Avatar</TableCell>
@@ -185,7 +230,7 @@ const DataTable = () => {
             <TableBody>{userRows}</TableBody>
           </Table>
         </TableContainer>
-        <Stack>
+        <Stack spacing={2} py={2} sx={{ marginLeft: "500px !important" }}>
           <Pagination
             defaultPage={1}
             count={Math.ceil(searchedUsers.length / rowsPerPage)}
