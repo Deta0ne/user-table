@@ -35,11 +35,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import AddUserForm from "./AddUserForm";
+import EditUserForm from "./EditUserForm";
 
 const DataTable = () => {
   const {
     fetchUsers,
-    users,
     tabValue,
     handleAddClose,
     handleAddClickOpen,
@@ -59,6 +59,9 @@ const DataTable = () => {
     handleTabChange,
     searchedUsers,
     filteredUsersByRole,
+    openEditDialog,
+    handleEditClickOpen,
+    handleEditClose,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -97,7 +100,7 @@ const DataTable = () => {
           <IconButton onClick={() => user.id && deleteUser(user.id)}>
             <DeleteIcon />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={() => user.id && handleEditClickOpen(user.id)}>
             <EditIcon />
           </IconButton>
         </TableCell>
@@ -197,6 +200,12 @@ const DataTable = () => {
           <DialogTitle>Add New User</DialogTitle>
           <DialogContent>
             <AddUserForm />
+          </DialogContent>
+        </Dialog>
+        <Dialog open={openEditDialog} onClose={handleEditClose}>
+          <DialogTitle>Edit User</DialogTitle>
+          <DialogContent>
+            <EditUserForm />
           </DialogContent>
         </Dialog>
       </Paper>

@@ -3,10 +3,12 @@ import axios from "axios";
 import { User } from "../types/User";
 
 interface UserContextType {
-  users: User[];
+  username: string;
+  fullName: string;
+  email: string;
+  setSelectedAvatar: (selectedAvatar: string) => void;
   setUsers: (users: User[]) => void;
   tabValue: string;
-  setTabValue: (value: string) => void;
   openAddDialog: boolean;
   handleAddClickOpen: () => void;
   handleAddClose: () => void;
@@ -29,12 +31,11 @@ interface UserContextType {
   checkedUsers: Set<number>;
   setCheckedUsers: (checkedUsers: Set<number>) => void;
   selectAll: boolean;
-  setSelectAll: (selectAll: boolean) => void;
   handleSelectAll: () => void;
   page: number;
-  setPage: (page: number) => void;
+
   rowsPerPage: number;
-  setRowsPerPage: (rowsPerPage: number) => void;
+
   handleChangePage: (
     event: React.ChangeEvent<unknown>,
     newPage: number
@@ -45,6 +46,10 @@ interface UserContextType {
   handleTabChange: (event: React.SyntheticEvent, newValue: string) => void;
   filteredUsersByRole: User[];
   searchedUsers: User[];
+  openEditDialog: boolean;
+  handleEditClickOpen: (id: number) => void;
+  handleEditClose: () => void;
+  handleEditSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 const UserContext = createContext<UserContextType>({} as UserContextType);
 
@@ -175,13 +180,65 @@ function Provider({ children }: any) {
       setIsSubmitting(false);
     }
   };
+  //User Edit Form
+  //Edit User Form Dialog
+  const [openEditDialog, setopenEditDialog] = useState(false);
+  const [editId, setEditId] = useState(Number);
+  const handleEditClickOpen = (id: number) => {
+    setEditId(id);
+    const user = users.find((user) => user.id === id);
+    if (user) {
+      setFullName(user.fullName);
+      setUsername(user.username);
+      setEmail(user.email);
+      setRole(user.role);
+      setSelectedAvatar(user.avatar);
+    }
+    setopenEditDialog(true);
+  };
+  const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    const editedUser: User = {
+      fullName: fullName,
+      username: username,
+      email: email,
+      role: role,
+      avatar: selectedAvatar,
+    };
+    try {
+      const { data } = await axios.put(
+        `http://localhost:3000/users/${editId}`,
+        editedUser
+      );
+      setUsers((prevUsers) => {
+        const newUsers = [...prevUsers];
+        const index = newUsers.findIndex((user) => user.id === editedUser.id);
+        newUsers[index] = data;
+        return newUsers;
+      });
+      handleEditClose();
+    } catch (error) {
+      console.log("Kullanıcı Düzenlenemedi");
+    } finally {
+      setIsSubmitting(false);
+      fetchUsers();
+    }
+  };
+
+  const handleEditClose = () => {
+    setopenEditDialog(false);
+  };
 
   //Paylaşılanlar
   const sharedValuesAndMethods: UserContextType = {
-    users,
+    username,
+    fullName,
+    email,
+    setSelectedAvatar,
     setUsers,
+    handleEditSubmit,
     tabValue,
-    setTabValue,
     openAddDialog,
     handleAddClickOpen,
     handleAddClose,
@@ -201,12 +258,9 @@ function Provider({ children }: any) {
     checkedUsers,
     setCheckedUsers,
     selectAll,
-    setSelectAll,
     handleSelectAll,
     page,
-    setPage,
     rowsPerPage,
-    setRowsPerPage,
     handleChangePage,
     deleteUser,
     deleteSelectedUsers,
@@ -214,6 +268,9 @@ function Provider({ children }: any) {
     handleTabChange,
     filteredUsersByRole,
     searchedUsers,
+    openEditDialog,
+    handleEditClickOpen,
+    handleEditClose,
   };
   return (
     <UserContext.Provider value={sharedValuesAndMethods}>
