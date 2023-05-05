@@ -40,11 +40,17 @@ interface UserContextType {
     event: React.ChangeEvent<unknown>,
     newPage: number
   ) => void;
+  deleteUser: (id: number) => Promise<void>;
 }
 const UserContext = createContext<UserContextType>({} as UserContextType);
 
 function Provider({ children }: any) {
   //DataTable
+  //Delete User
+  const deleteUser = async (id: number) => {
+    await axios.delete(`http://localhost:3000/users/${id}`);
+    fetchUsers();
+  };
   // Pagintaiton
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
@@ -173,6 +179,7 @@ function Provider({ children }: any) {
     rowsPerPage,
     setRowsPerPage,
     handleChangePage,
+    deleteUser,
   };
   return (
     <UserContext.Provider value={sharedValuesAndMethods}>

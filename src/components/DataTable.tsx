@@ -33,7 +33,7 @@ import Tab from "@mui/material/Tab";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { CheckBox } from "@mui/icons-material";
+import EditIcon from "@mui/icons-material/Edit";
 import AddUserForm from "./AddUserForm";
 
 const DataTable = () => {
@@ -59,6 +59,7 @@ const DataTable = () => {
     rowsPerPage,
     setRowsPerPage,
     handleChangePage,
+    deleteUser,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -96,7 +97,12 @@ const DataTable = () => {
         <TableCell>{user.email}</TableCell>
         <TableCell>{user.role}</TableCell>
         <TableCell>
-          {/* Düzenleme işlemini burada gerçekleştirebilirsiniz */}
+          <IconButton onClick={() => user.id && deleteUser(user.id)}>
+            <DeleteIcon />
+          </IconButton>
+          <IconButton>
+            <EditIcon />
+          </IconButton>
         </TableCell>
       </TableRow>
     ));
