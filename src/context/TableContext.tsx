@@ -41,6 +41,7 @@ interface UserContextType {
     newPage: number
   ) => void;
   deleteUser: (id: number) => Promise<void>;
+  deleteSelectedUsers: () => Promise<void>;
 }
 const UserContext = createContext<UserContextType>({} as UserContextType);
 
@@ -51,6 +52,20 @@ function Provider({ children }: any) {
     await axios.delete(`http://localhost:3000/users/${id}`);
     fetchUsers();
   };
+  const deleteSelectedUsers = async () => {
+    try {
+      const deletePromises = Array.from(checkedUsers).map((userId) =>
+        axios.delete(`http://localhost:3000/users/${userId}`)
+      );
+      await Promise.all(deletePromises);
+      fetchUsers();
+      setCheckedUsers(new Set());
+      setSelectAll(false);
+    } catch (error) {
+      console.log("Seçili kullanıcılar silinemedi");
+    }
+  };
+
   // Pagintaiton
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
@@ -180,6 +195,7 @@ function Provider({ children }: any) {
     setRowsPerPage,
     handleChangePage,
     deleteUser,
+    deleteSelectedUsers,
   };
   return (
     <UserContext.Provider value={sharedValuesAndMethods}>

@@ -60,6 +60,7 @@ const DataTable = () => {
     setRowsPerPage,
     handleChangePage,
     deleteUser,
+    deleteSelectedUsers,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -72,22 +73,20 @@ const DataTable = () => {
     .map((user: User) => (
       <TableRow key={user.id}>
         <TableCell>
-          <TableCell>
-            <Checkbox
-              checked={user.id ? checkedUsers.has(user.id) : false}
-              onChange={() => {
-                if (user.id) {
-                  const newCheckedUsers = new Set(checkedUsers);
-                  if (checkedUsers.has(user.id)) {
-                    newCheckedUsers.delete(user.id);
-                  } else {
-                    newCheckedUsers.add(user.id);
-                  }
-                  setCheckedUsers(newCheckedUsers);
+          <Checkbox
+            checked={user.id ? checkedUsers.has(user.id) : false}
+            onChange={() => {
+              if (user.id) {
+                const newCheckedUsers = new Set(checkedUsers);
+                if (checkedUsers.has(user.id)) {
+                  newCheckedUsers.delete(user.id);
+                } else {
+                  newCheckedUsers.add(user.id);
                 }
-              }}
-            />
-          </TableCell>
+                setCheckedUsers(newCheckedUsers);
+              }
+            }}
+          />
         </TableCell>
         <TableCell>
           <Avatar src={user.avatar ? `/src/assets/${user.avatar}.png` : ""} />
@@ -163,7 +162,9 @@ const DataTable = () => {
           >
             <DeleteIcon />
           </IconButton>
-          <Button variant="text">Delete</Button>
+          <Button variant="text" onClick={deleteSelectedUsers}>
+            Delete
+          </Button>
         </Stack>
         <TableContainer>
           <Table>
