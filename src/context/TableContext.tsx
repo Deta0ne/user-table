@@ -24,7 +24,6 @@ interface UserContextType {
   selectedAvatar: string;
   isSubmitting: boolean;
   requestSearch: (searchedVal: string) => void;
-  filteredUsers: User[];
   searched: string;
   setSearched: (searched: string) => void;
   checkedUsers: Set<number>;
@@ -44,6 +43,8 @@ interface UserContextType {
   deleteSelectedUsers: () => Promise<void>;
   filterByRole: (user: User) => boolean;
   handleTabChange: (event: React.SyntheticEvent, newValue: string) => void;
+  filteredUsersByRole: User[];
+  searchedUsers: User[];
 }
 const UserContext = createContext<UserContextType>({} as UserContextType);
 
@@ -87,7 +88,7 @@ function Provider({ children }: any) {
       setCheckedUsers(new Set());
     } else {
       const newCheckedUsers = new Set<number>();
-      filteredUsers.forEach((user) => {
+      searchedUsers.forEach((user) => {
         if (user.id) {
           newCheckedUsers.add(user.id);
         }
@@ -124,14 +125,17 @@ function Provider({ children }: any) {
   // Search User
   const [searched, setSearched] = useState<string>("");
   const requestSearch = (searchedVal: string) => {
+    setPage(0);
     setSearched(searchedVal);
   };
-  const filteredUsers = users.filter((user: User) => {
+
+  const searchedUsers = users.filter((user: User) => {
     return (
       user.email.toLowerCase().includes(searched.toLowerCase()) ||
       user.username.toLowerCase().includes(searched.toLowerCase())
     );
   });
+  const filteredUsersByRole = searchedUsers.filter(filterByRole);
 
   //AddUserForm
   //User State
@@ -192,7 +196,6 @@ function Provider({ children }: any) {
     handleAvatarChange,
     isSubmitting,
     requestSearch,
-    filteredUsers,
     searched,
     setSearched,
     checkedUsers,
@@ -209,6 +212,8 @@ function Provider({ children }: any) {
     deleteSelectedUsers,
     filterByRole,
     handleTabChange,
+    filteredUsersByRole,
+    searchedUsers,
   };
   return (
     <UserContext.Provider value={sharedValuesAndMethods}>

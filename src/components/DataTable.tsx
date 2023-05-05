@@ -40,29 +40,25 @@ const DataTable = () => {
   const {
     fetchUsers,
     users,
-    setTabValue,
     tabValue,
     handleAddClose,
     handleAddClickOpen,
     openAddDialog,
     requestSearch,
-    filteredUsers,
     searched,
     setSearched,
     checkedUsers,
     setCheckedUsers,
     selectAll,
-    setSelectAll,
     handleSelectAll,
     page,
-    setPage,
     rowsPerPage,
-    setRowsPerPage,
     handleChangePage,
     deleteUser,
     deleteSelectedUsers,
-    filterByRole,
     handleTabChange,
+    searchedUsers,
+    filteredUsersByRole,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -70,8 +66,7 @@ const DataTable = () => {
   }, []);
 
   //Add users to table
-  const userRows = filteredUsers
-    .filter(filterByRole)
+  const userRows = filteredUsersByRole
     .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
     .map((user: User) => (
       <TableRow key={user.id}>
@@ -190,7 +185,7 @@ const DataTable = () => {
         <Stack>
           <Pagination
             defaultPage={1}
-            count={Math.ceil(filteredUsers.length / rowsPerPage)}
+            count={Math.ceil(searchedUsers.length / rowsPerPage)}
             shape="rounded"
             size="small"
             color="primary"
