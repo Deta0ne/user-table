@@ -1,56 +1,8 @@
 import React, { createContext, useState } from "react";
 import axios from "axios";
 import { User } from "../types/User";
+import { UserContextType } from "../types/UserContextType";
 
-interface UserContextType {
-  username: string;
-  fullName: string;
-  email: string;
-  setSelectedAvatar: (selectedAvatar: string) => void;
-  setUsers: (users: User[]) => void;
-  tabValue: string;
-  openAddDialog: boolean;
-  handleAddClickOpen: () => void;
-  handleAddClose: () => void;
-  handleAddSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  handleAvatarChange: (
-    e: React.MouseEvent<HTMLElement>,
-    newAvatar: string
-  ) => void;
-  fetchUsers: () => Promise<void>;
-  setFullName: (fullName: string) => void;
-  setUsername: (username: string) => void;
-  setEmail: (email: string) => void;
-  role: string;
-  setRole: (role: string) => void;
-  selectedAvatar: string;
-  isSubmitting: boolean;
-  requestSearch: (searchedVal: string) => void;
-  searched: string;
-  setSearched: (searched: string) => void;
-  checkedUsers: Set<number>;
-  setCheckedUsers: (checkedUsers: Set<number>) => void;
-  selectAll: boolean;
-  handleSelectAll: () => void;
-  page: number;
-
-  rowsPerPage: number;
-
-  handleChangePage: (
-    event: React.ChangeEvent<unknown>,
-    newPage: number
-  ) => void;
-  deleteUser: (id: number) => Promise<void>;
-  deleteSelectedUsers: () => Promise<void>;
-  filterByRole: (user: User) => boolean;
-  handleTabChange: (event: React.SyntheticEvent, newValue: string) => void;
-  filteredUsersByRole: User[];
-  searchedUsers: User[];
-  openEditDialog: boolean;
-  handleEditClickOpen: (id: number) => void;
-  handleEditClose: () => void;
-  handleEditSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-}
 const UserContext = createContext<UserContextType>({} as UserContextType);
 
 function Provider({ children }: any) {
@@ -76,10 +28,10 @@ function Provider({ children }: any) {
 
   // Pagintaiton
   const [page, setPage] = useState<number>(0);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
+  const [rowsPerPage] = useState<number>(10);
 
   const handleChangePage = (
-    event: React.ChangeEvent<unknown>,
+    _event: React.ChangeEvent<unknown>,
     newPage: number
   ) => {
     setPage(newPage - 1);
@@ -104,7 +56,7 @@ function Provider({ children }: any) {
   };
   //Tab and role filter
   const [tabValue, setTabValue] = useState("all");
-  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
     setPage(0);
     setTabValue(newValue);
   };
@@ -153,7 +105,7 @@ function Provider({ children }: any) {
   // Avatar State
   const [selectedAvatar, setSelectedAvatar] = React.useState("");
   const handleAvatarChange = (
-    event: React.MouseEvent<HTMLElement>,
+    _event: React.MouseEvent<HTMLElement>,
     newAvatar: string
   ) => {
     setSelectedAvatar(newAvatar);

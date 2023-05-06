@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useContext } from "react";
 import {
   Box,
   Stack,
@@ -31,9 +31,17 @@ const AddUserForm = () => {
 
   return (
     <div>
-      <Box component={"form"} onSubmit={handleAddSubmit}>
-        <Stack spacing={3}>
+      <Box
+        sx={{
+          width: "300px",
+          height: "600px",
+        }}
+        component={"form"}
+        onSubmit={handleAddSubmit}
+      >
+        <Stack sx={{ paddingTop: "18px" }} spacing={4}>
           <TextField
+            required={true}
             label="Full Name"
             variant="outlined"
             size="small"
@@ -42,6 +50,7 @@ const AddUserForm = () => {
             }}
           />
           <TextField
+            required={true}
             label="Username"
             variant="outlined"
             size="small"
@@ -50,6 +59,7 @@ const AddUserForm = () => {
             }}
           />
           <TextField
+            required={true}
             label="Email Address"
             variant="outlined"
             size="small"
@@ -60,6 +70,8 @@ const AddUserForm = () => {
           <FormControl>
             <InputLabel>Rol</InputLabel>
             <Select
+              required={true}
+              className="formControl"
               label="Age"
               size="small"
               value={role}
@@ -75,12 +87,23 @@ const AddUserForm = () => {
           </FormControl>
         </Stack>
         <Stack>
-          <FormLabel>Select Avatar</FormLabel>
+          <FormLabel
+            sx={{
+              marginTop: "200px",
+              marginBottom: "10px",
+            }}
+          >
+            Select Avatar
+          </FormLabel>
           <ToggleButtonGroup
             value={selectedAvatar}
             exclusive
             onChange={handleAvatarChange}
             aria-label="avatar selection"
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
           >
             {Array.from({ length: 6 }, (_, i) => i + 1).map((avatarIndex) => (
               <ToggleButton
@@ -92,6 +115,10 @@ const AddUserForm = () => {
                     ? " avatar-button-selected"
                     : ""
                 }`}
+                sx={{
+                  marginLeft: "12px",
+                  marginRight: "12px",
+                }}
               >
                 <img
                   src={`/src/assets/Avatar${avatarIndex}.png`}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import {
   Avatar,
   Stack,
@@ -24,7 +24,6 @@ import UserContext from "../context/TableContext";
 //Dialog İmport
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
 //Tab İmport
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
@@ -171,9 +170,10 @@ const DataTable = () => {
           <Button
             sx={{
               my: "10px",
-              height: "30px",
+              height: "40px",
               width: "145px",
               textTransform: "none",
+              marginLeft: "10px",
             }}
             variant="contained"
             size="small"
@@ -242,13 +242,11 @@ const DataTable = () => {
           />
         </Stack>
         <Dialog open={openAddDialog} onClose={handleAddClose}>
-          <DialogTitle>Add New User</DialogTitle>
           <DialogContent>
             <AddUserForm />
           </DialogContent>
         </Dialog>
         <Dialog open={openEditDialog} onClose={handleEditClose}>
-          <DialogTitle>Edit User</DialogTitle>
           <DialogContent>
             <EditUserForm />
           </DialogContent>

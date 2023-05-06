@@ -34,18 +34,27 @@ const EditUserForm = () => {
 
   return (
     <div>
-      <Box component={"form"} onSubmit={handleEditSubmit}>
-        <Stack spacing={3}>
+      <Box
+        sx={{
+          width: "300px",
+          height: "600px",
+        }}
+        component={"form"}
+        onSubmit={handleEditSubmit}
+      >
+        <Stack sx={{ paddingTop: "18px" }} spacing={4}>
           <TextField
             label="Full Name"
             variant="outlined"
             size="small"
+            required={true}
             value={fullName}
             onChange={(e) => {
               setFullName(e.target.value);
             }}
           />
           <TextField
+            required={true}
             label="Username"
             variant="outlined"
             value={username}
@@ -55,6 +64,7 @@ const EditUserForm = () => {
             }}
           />
           <TextField
+            required={true}
             label="Email Address"
             variant="outlined"
             value={email}
@@ -64,8 +74,10 @@ const EditUserForm = () => {
             }}
           />
           <FormControl>
-            <InputLabel>Role</InputLabel>
+            <InputLabel>Rol</InputLabel>
             <Select
+              required={true}
+              className="formControl"
               label="Age"
               size="small"
               value={role}
@@ -81,12 +93,23 @@ const EditUserForm = () => {
           </FormControl>
         </Stack>
         <Stack>
-          <FormLabel>Select Avatar</FormLabel>
+          <FormLabel
+            sx={{
+              marginTop: "200px",
+              marginBottom: "10px",
+            }}
+          >
+            Select Avatar
+          </FormLabel>
           <ToggleButtonGroup
             value={selectedAvatar}
             exclusive
             onChange={handleAvatarChange}
             aria-label="avatar selection"
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
           >
             {Array.from({ length: 6 }, (_, i) => i + 1).map((avatarIndex) => (
               <ToggleButton
@@ -98,6 +121,10 @@ const EditUserForm = () => {
                     ? " avatar-button-selected"
                     : ""
                 }`}
+                sx={{
+                  marginLeft: "12px",
+                  marginRight: "12px",
+                }}
               >
                 <img
                   src={`/src/assets/Avatar${avatarIndex}.png`}
