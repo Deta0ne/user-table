@@ -124,6 +124,7 @@ function Provider({ children }: any) {
     try {
       const { data } = await axios.post("http://localhost:3000/users", newUser);
       setUsers((prevUsers) => [...prevUsers, data]);
+      setSelectedAvatar("");
       handleAddClose();
     } catch (error) {
       console.log("Kullanıcı Oluşturulamadı");
