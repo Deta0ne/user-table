@@ -1,20 +1,188 @@
 {
   "users": [
     {
-      "fullName": "Cuma Mert Yıldız",
-      "username": "Aithra",
-      "email": "cyhaeed.01@gmail.com",
-      "role": "Administrator",
+      "fullName": "Zachary Gomez",
+      "username": "zachary-gomez",
+      "email": "zachary-gomez@gmail.com",
+      "role": "Editor",
       "avatar": "Avatar3",
       "id": 1
     },
     {
-      "fullName": "Finarfin Noldor",
-      "username": "Finar",
-      "email": "finar.01@gmail.com",
-      "role": "Contributor",
-      "avatar": "Avatar2",
+      "fullName": "Amanda Montgomery",
+      "username": "amanda-montgomery",
+      "email": "amanda-montgomery@gmail.com",
+      "role": "Subscriber",
+      "avatar": "Avatar3",
       "id": 2
+    },
+    {
+      "fullName": "Lester Holland",
+      "username": "lester-holland",
+      "email": "lester75@gmail.com",
+      "role": "Subscriber",
+      "avatar": "Avatar3",
+      "id": 3
+    },
+    {
+      "fullName": "Max Allison",
+      "username": "max-allison",
+      "email": "max-allison@pochta.io",
+      "role": "Subscriber",
+      "avatar": "Avatar3",
+      "id": 4
+    },
+    {
+      "fullName": "Richard Gregory",
+      "username": "r.gregory",
+      "email": "gregory@gmail.com",
+      "role": "Subscriber",
+      "avatar": "Avatar3",
+      "id": 5
+    },
+    {
+      "fullName": "Clifford Caldwell",
+      "username": "clifford-caldwell",
+      "email": "clifford-c@gmail.com",
+      "role": "Author",
+      "avatar": "Avatar3",
+      "id": 6
+    },
+    {
+      "fullName": "Lester Holland",
+      "username": "lester-holland",
+      "email": "lester75@gmail.com",
+      "role": "Subscriber",
+      "avatar": "Avatar3",
+      "id": 7
+    },
+    {
+      "fullName": "Max Allison",
+      "username": "max-allison",
+      "email": "max-allison@pochta.io",
+      "role": "Subscriber",
+      "avatar": "Avatar3",
+      "id": 8
+    },
+    {
+      "fullName": "Richard Gregory",
+      "username": "r.gregory",
+      "email": "gregory@gmail.com",
+      "role": "Subscriber",
+      "avatar": "Avatar3",
+      "id": 9
+    },
+    {
+      "fullName": "Clifford Caldwell",
+      "username": "clifford-caldwell",
+      "email": "clifford-c@gmail.com",
+      "role": "Author",
+      "avatar": "Avatar3",
+      "id": 10
+    },
+    {
+      "fullName": "Feanor Noldor",
+      "username": "fenar-moldor",
+      "email": "feannor@gmail.com",
+      "role": "Administrator",
+      "avatar": "Avatar4",
+      "id": 11
+    },
+    {
+      "fullName": "Maedhros",
+      "username": "maedhros",
+      "email": "maedhros@noldor.com",
+      "role": "Subscriber",
+      "avatar": "Avatar1",
+      "id": 12
+    },
+    {
+      "fullName": "Maglor",
+      "username": "maglor-noldor",
+      "email": "maglor@noldor.com",
+      "role": "Author",
+      "avatar": "Avatar1",
+      "id": 13
+    },
+    {
+      "fullName": "Caranthir",
+      "username": "caranthir-noldor",
+      "email": "caranthir@noldor.com",
+      "role": "Contributor",
+      "avatar": "Avatar5",
+      "id": 14
+    },
+    {
+      "fullName": "Fingolfin",
+      "username": "fingolfin-noldor",
+      "email": "fongolfin@gmail.com",
+      "role": "Author",
+      "avatar": "Avatar6",
+      "id": 15
+    },
+    {
+      "fullName": "Finarfin",
+      "username": "finar",
+      "email": "finarfin@hotmail.com",
+      "role": "Administrator",
+      "avatar": "Avatar2",
+      "id": 16
+    },
+    {
+      "fullName": "Gil-galad",
+      "username": "gil-galad",
+      "email": "gilgalad@outlook.com",
+      "role": "Subscriber",
+      "avatar": "Avatar4",
+      "id": 17
+    },
+    {
+      "fullName": "Fingon Noldor",
+      "username": "fongo",
+      "email": "fingon@yandex.com",
+      "role": "Subscriber",
+      "avatar": "Avatar4",
+      "id": 18
+    },
+    {
+      "fullName": "Melkor Angband",
+      "username": "morgoth",
+      "email": "melkor@gmail.com",
+      "role": "Administrator",
+      "avatar": "Avatar2",
+      "id": 19
+    },
+    {
+      "fullName": "Beren",
+      "username": "beren",
+      "email": "luthienim@gmail.com",
+      "role": "Subscriber",
+      "avatar": "Avatar5",
+      "id": 20
+    },
+    {
+      "fullName": "Manwe",
+      "username": "manwë",
+      "email": "manwe@admin.com",
+      "role": "Administrator",
+      "avatar": "Avatar3",
+      "id": 21
+    },
+    {
+      "fullName": "Ulmo",
+      "username": "ulmo-hamsi",
+      "email": "ulmo@gmail.com",
+      "role": "Subscriber",
+      "avatar": "Avatar4",
+      "id": 22
+    },
+    {
+      "fullName": "Orome",
+      "username": "orome-vala",
+      "email": "orome@gmail.com",
+      "role": "Subscriber",
+      "avatar": "Avatar2",
+      "id": 23
     }
   ]
 }

@@ -89,6 +89,7 @@ const EditUserForm = () => {
               <MenuItem value={"Subscriber"}>Subscriber</MenuItem>
               <MenuItem value={"Author"}>Author</MenuItem>
               <MenuItem value={"Administrator"}>Administrator</MenuItem>
+              <MenuItem value={"Editor"}>Editor</MenuItem>
             </Select>
           </FormControl>
         </Stack>

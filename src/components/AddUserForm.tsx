@@ -23,7 +23,6 @@ const AddUserForm = () => {
     setFullName,
     setUsername,
     setEmail,
-    role,
     setRole,
     selectedAvatar,
     handleAvatarChange,
@@ -74,7 +73,6 @@ const AddUserForm = () => {
               className="formControl"
               label="Age"
               size="small"
-              value={role}
               onChange={(e: SelectChangeEvent) => {
                 setRole(e.target.value as string);
               }}
@@ -83,6 +81,7 @@ const AddUserForm = () => {
               <MenuItem value={"Subscriber"}>Subscriber</MenuItem>
               <MenuItem value={"Author"}>Author</MenuItem>
               <MenuItem value={"Administrator"}>Administrator</MenuItem>
+              <MenuItem value={"Editor"}>Editor</MenuItem>
             </Select>
           </FormControl>
         </Stack>

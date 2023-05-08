@@ -13,17 +13,11 @@ function Provider({ children }: any) {
     fetchUsers();
   };
   const deleteSelectedUsers = async () => {
-    try {
-      const deletePromises = Array.from(checkedUsers).map((userId) =>
-        axios.delete(`http://localhost:3000/users/${userId}`)
-      );
-      await Promise.all(deletePromises);
-      fetchUsers();
-      setCheckedUsers(new Set());
-      setSelectAll(false);
-    } catch (error) {
-      console.log("Seçili kullanıcılar silinemedi");
+    for (const id of checkedUsers) {
+      await deleteUser(id);
     }
+    setCheckedUsers(new Set());
+    setSelectAll(false);
   };
 
   // Pagintaiton
@@ -45,7 +39,11 @@ function Provider({ children }: any) {
       setCheckedUsers(new Set());
     } else {
       const newCheckedUsers = new Set<number>();
-      searchedUsers.forEach((user) => {
+      const currentPageUsers = filteredUsersByRole.slice(
+        page * rowsPerPage,
+        (page + 1) * rowsPerPage
+      );
+      currentPageUsers.forEach((user) => {
         if (user.id) {
           newCheckedUsers.add(user.id);
         }
@@ -54,6 +52,7 @@ function Provider({ children }: any) {
     }
     setSelectAll(!selectAll);
   };
+
   //Tab and role filter
   const [tabValue, setTabValue] = useState("all");
   const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
