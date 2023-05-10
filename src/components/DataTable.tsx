@@ -91,7 +91,7 @@ const DataTable = () => {
         <TableCell>
           <Avatar
             variant="rounded"
-            src={user.avatar ? `/src/assets/${user.avatar}.png` : ""}
+            src={user.avatar ? `/${user.avatar}.png` : ""}
           />
         </TableCell>
         <TableCell>{user.fullName}</TableCell>

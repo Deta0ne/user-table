@@ -128,7 +128,7 @@ const EditUserForm = () => {
                 }}
               >
                 <img
-                  src={`/src/assets/Avatar${avatarIndex}.png`}
+                  src={`/Avatar${avatarIndex}.png`}
                   alt={`Avatar${avatarIndex}`}
                   className="avatar-image"
                 />

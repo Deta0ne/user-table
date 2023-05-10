@@ -9,7 +9,9 @@ function Provider({ children }: any) {
   //DataTable
   //Delete User
   const deleteUser = async (id: number) => {
-    await axios.delete(`http://localhost:3000/users/${id}`);
+    await axios.delete(
+      `https://645b555f99b618d5f318566b.mockapi.io/api/users/${id}`
+    );
     fetchUsers();
   };
   const deleteSelectedUsers = async () => {
@@ -75,7 +77,9 @@ function Provider({ children }: any) {
   //Fetch Users
   const [users, setUsers] = useState<User[]>([]);
   const fetchUsers = async () => {
-    const { data } = await axios.get("http://localhost:3000/users");
+    const { data } = await axios.get(
+      "https://645b555f99b618d5f318566b.mockapi.io/api/users"
+    );
     setUsers(data);
   };
   // Search User
@@ -122,7 +126,10 @@ function Provider({ children }: any) {
       avatar: selectedAvatar,
     };
     try {
-      const { data } = await axios.post("http://localhost:3000/users", newUser);
+      const { data } = await axios.post(
+        "https://645b555f99b618d5f318566b.mockapi.io/api/users",
+        newUser
+      );
       setUsers((prevUsers) => [...prevUsers, data]);
       setSelectedAvatar("");
       handleAddClose();
@@ -160,7 +167,7 @@ function Provider({ children }: any) {
     };
     try {
       const { data } = await axios.put(
-        `http://localhost:3000/users/${editId}`,
+        `https://645b555f99b618d5f318566b.mockapi.io/api/users/${editId}`,
         editedUser
       );
       setUsers((prevUsers) => {
