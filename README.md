@@ -30,16 +30,10 @@ Uygulamayı localhost'da çalıştırma
 npm run dev
 ```
 
-Verileri json-server ile çekme
-
-```
-json-server --watch api/db.json
-```
-
 ## Hangi teknolojiler ile yapıldı.
 
 ```
-Typescript, Vite, React, material UI, axios, json-server,CSS
+CSS,HTML,Typescript, Vite, React, material UI, axios, mockapi.io
 ```
 
 ## Bağımlılıklar
