@@ -212,7 +212,7 @@ const DataTable = () => {
             Delete
           </Button>
         </Stack>
-        <TableContainer>
+        <TableContainer sx={{ minHeight: "803px" }}>
           <Table>
             <TableHead sx={{ background: "#F5F5F7" }}>
               <TableRow>
